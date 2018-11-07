@@ -44,9 +44,6 @@ public class PostService {
 		
 		postDao.insertPost(cc,tt);
 		// mmsDao.insert()
-		// sdkdk 
-		// dlsakd
-		
 		
 	}
 
