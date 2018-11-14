@@ -6,6 +6,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready( function() {
+	$.ajax({
+		method : 'GET',
+		url : '${pageContext.request.contextPath}/listAsync',
+		success : function( res ) {
+			// [{"title": "first" }, {}, ..{} ]
+			var posts = JSON.parse( res );
+			for ( var i = 0 ; i < posts.length ; i ++ ) {
+				$('#posts').append('<li>' + posts[i].title + '</li>');
+			}
+		}
+	});
+});
+</script>
 </head>
 <body>
 <c:if test="${not empty Member }">
@@ -22,7 +38,8 @@
 	<li> <a href="${pageContext.request.contextPath}/content/${each.seq}">${ each.title}</a> 
  </c:forEach>
 </ul>
-
+<h3>비동기로 로드한 글내용</h3>
+<ul id="posts"></ul>
 <a href="${pageContext.request.contextPath}/write">글쓰기(한글 나와라!)</a>
 </body>
 </html>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import github.sunkeun.webboard.dto.Post;
 import github.sunkeun.webboard.service.PostService;
@@ -66,6 +67,26 @@ public class HomeController {
 		req.setAttribute("posts", all);
 		
 		return "list";
+	}
+	
+	@RequestMapping(value = "/listAsync", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String pageListAsync ( ) {
+		List<Post> all = postService.findAll();
+		// req.setAttribute("posts", all);
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		for( Post p : all) {
+			sb.append("{");
+			sb.append("\"title\" :\"" +p.getTitle() +"\"");
+			sb.append("}");
+			sb.append(",");
+		}
+		sb.delete(sb.length()-1, sb.length());
+		sb.append("]");
+		System.out.println(sb.toString());
+		
+		return sb.toString();
 	}
 	// /content/22222
 	// http://localhost:8080/webboard/content/yes

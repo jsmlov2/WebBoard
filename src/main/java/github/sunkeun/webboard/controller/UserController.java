@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import github.sunkeun.webboard.dto.Member;
 import github.sunkeun.webboard.service.UserService;
@@ -45,6 +46,10 @@ public class UserController {
 		userService.insertMember(m);
 		
 		return "/confirmLogin";
+		/*
+		
+		return {success: false, cause:DUP_ID} 
+		 */
 		
 	}
 	
@@ -71,6 +76,23 @@ public class UserController {
 		}else {
 			session.setAttribute("error", "LOOGIN_ERR");
 			return "redirect:/login";
+		}
+		
+	}
+	
+	@RequestMapping(value="/doLoginAsyn", method=RequestMethod.POST)
+	@ResponseBody
+	public String doLoginAsync(@RequestParam String id, @RequestParam String pw, HttpSession session) {
+		
+		Member m = userService.login(id,pw);
+		
+		System.out.println("login user: " + m);
+		if(m!=null) {
+			
+			session.setAttribute("Member", m);
+			return "{\"success\": true, \"id\": \"dddddd\" }";
+		}else {
+			return  "{\"success\": false, \"id\": null }";
 		}
 		
 	}
