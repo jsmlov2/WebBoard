@@ -8,6 +8,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+<c:if test="${not empty Member }">
+	<div>
+		<span>안녕하세요 ${Member.name }님</span>
+		<span><a href="${pageContext.request.contextPath}/logout">로그아웃</a></span>
+	</div>
+</c:if>
+<c:if test="${empty Member }">
+	<div><a href="${pageContext.request.contextPath}/login">로그인</a></div>
+</c:if>
 <ul>
  <c:forEach var="each" items="${ posts }">
 	<li> <a href="${pageContext.request.contextPath}/content/${each.seq}">${ each.title}</a> 

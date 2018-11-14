@@ -136,8 +136,9 @@ public class HomeController {
 	}
 	
 	//@RequestMapping(value = "/delete?seq={seq}", method = RequestMethod.POST)
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String pagedoWrite (@RequestParam int seq ) {
+	// public String pagedoWrite (@RequestParam int seq ) {
+	@RequestMapping(value = "/delete/{seq}", method = RequestMethod.POST)
+	public String pagedoWrite (@PathVariable int seq ) {
 		
 	    System.out.println(seq);
 		postService.deletePost(seq);
@@ -145,8 +146,10 @@ public class HomeController {
 		return "redirect:/list"; //
 	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String pageUpdate (@RequestParam int seq ,HttpServletRequest req) {
+//	@RequestMapping(value = "/update/{seq}", method = RequestMethod.GET)
+//	public String pageUpdate (@RequestParam int seq ,HttpServletRequest req) {
+		@RequestMapping(value = "/update/{seq}", method = RequestMethod.GET)
+	public String pageUpdate (@PathVariable int seq ,HttpServletRequest req) {
 		
 	    System.out.println(seq);
 	    

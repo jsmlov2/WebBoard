@@ -30,13 +30,21 @@ function goTo ( ) {
 <h3> ${post.title}</h3>
 <p>${post.content}</p>
 <p>${post.seq}</p>
-<!--<input type="button" onClick="${pageContext.request.contextPath}/delete?seq=${post.seq}" value="글삭제" > -->
+
+<!--<input type="button" onClick="${pageContext.request.contextPath}/delete" value="글삭제" > -->
+<%--
+query string 방식  
 <form action="${pageContext.request.contextPath}/delete" method="post">
 <input type="hidden" name="seq" value="${post.seq}">
 <input type="submit"  value="글삭제" >
+</form> --%>
+
+<form action="${pageContext.request.contextPath}/delete/${post.seq}" method="post">
+<input type="submit"  value="글삭제" >
 </form>
 
-<a href="${pageContext.request.contextPath}/update?seq=${post.seq}">수정하기</a>
+<%-- <a href="${pageContext.request.contextPath}/update?seq=${post.seq}">수정하기</a> --%>
+<a href="${pageContext.request.contextPath}/update/${post.seq}">수정하기</a> 
 </c:if>
 
 </body>

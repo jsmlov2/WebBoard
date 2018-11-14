@@ -14,6 +14,7 @@ public class Post {
 	Integer seq; // PK
 	String title;
 	String content;
+	// User writer;
 	
 	
 	
