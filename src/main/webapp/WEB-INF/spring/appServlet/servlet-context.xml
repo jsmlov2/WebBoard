@@ -37,5 +37,20 @@
 		<beans:property name="username" value="root"></beans:property>
 		<beans:property name="password" value="1111"></beans:property>
 	</beans:bean>
+	<!--
+		mybatis 설정을 간편하게!!! 
+	 -->
+	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource"></beans:property>
+		<beans:property name="mapperLocations" value="classpath:mybatis/mappers/*.xml"></beans:property>
+	</beans:bean>
+	
+	
+	<!--
+		try { ... } catch { .. } finally { .. } 
+	 -->
+	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg ref="sqlSessionFactory"></beans:constructor-arg>
+	</beans:bean>
 	
 </beans:beans>

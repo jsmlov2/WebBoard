@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PostMapper">
+	<resultMap type="github.sunkeun.webboard.dto.Post" id="postMap">
+		<result property="seq" column="seq"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+	</resultMap>
+	<!--
+	    Post p = new Post();
+	    
+		seq: p.setSeq(rs.getInt("seq"))
+		title: p.setTitle(rs.getString("title") );  
+	 -->
+	<select id="findAll" resultType="github.sunkeun.webboard.dto.Post">
+		select
+			seq,
+			title,
+			content
+		from posts
+	</select>
+	
+	<select id="findPostBySeq" parameterType="int" resultMap="postMap">
+		select * from posts where seq = #{id}
+	</select>
+	
+	<!--
+	update posts 
+		set 
+			title = ?, 
+			content=?
+		where seq =?
+	   #{title} => map.get("title")
+	   ps.setString(1, map.get("title");
+	    
+	 -->
+	<update id="updatePost" parameterType="hashmap" >
+		update posts 
+		set 
+			title = #{t} , 
+			content=#{content}
+		where seq =#{pk}
+	</update>
+	
+	<delete id="deletetPost" parameterType="int">
+        delete from posts 
+        where seq = #{id}
+	</delete>
+	
+	
+</mapper>
