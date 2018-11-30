@@ -44,6 +44,7 @@ public class RealPostDao implements IPostDao{
 				String content = rs.getString("content");
 				all.add(new Post(seq, title, content));
 			}
+			con.close();
 			return all;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

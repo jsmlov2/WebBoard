@@ -1,5 +1,7 @@
 package github.sunkeun.webboard.controller;
 
+import java.sql.SQLException;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,7 +30,7 @@ public class UserController {
 		
 		
 		
-		return "/join";
+		return "/join"; //join.jsp
 	}
  
 	@RequestMapping(value="/join", method=RequestMethod.POST)
@@ -45,13 +47,42 @@ public class UserController {
 		
 		userService.insertMember(m);
 		
-		return "/confirmLogin";
+		return "/confirmLogin"; //confirmLogin
 		/*
 		
 		return {success: false, cause:DUP_ID} 
 		 */
 		
 	}
+	
+	@RequestMapping(value="/joinAsync", method=RequestMethod.POST)
+	@ResponseBody  // return 타입이 아니라, jsp를 찾는게 아니고 나를 호출한 곳으로 데이터 넘김 res로
+	public String insertMemberAsync(@RequestParam String id, @RequestParam String pw, 
+			@RequestParam String name, @RequestParam String address, @RequestParam String  eMail ) {
+		
+		System.out.println("%s %s %S %S %S"+id+pw+name+address+eMail);
+		Member m = new Member();
+		m.setId(id);
+		m.setPw(pw);
+		m.setName(name);
+		m.setAddress(address);
+		m.seteMail(eMail);
+		try {
+			userService.insertMember(m);
+			return "{\"success\": true}";
+		} catch ( Exception e) {
+			return "{\"success\": false, \"cause\":\"DUP_ID\"}";
+		}
+		
+		//return "/confirmLogin";
+		//{ "success" : true , "id" : ddddd}
+		/*
+		
+		return {success: false, cause:DUP_ID} 
+		 */
+		
+	}
+	
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String doLogin() {
@@ -90,7 +121,7 @@ public class UserController {
 		if(m!=null) {
 			
 			session.setAttribute("Member", m);
-			return "{\"success\": true, \"id\": \"dddddd\" }";
+			return "{\"success\": true, \"id\": \"dddddd\" }"; //?? dddd 이게 뭐지:::
 		}else {
 			return  "{\"success\": false, \"id\": null }";
 		}
