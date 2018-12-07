@@ -18,7 +18,7 @@ public class Post {
 	String title;
 	String content;
 	List<String> tags;
-	// Member writer;
+	Member writer;
 	
 	
 	public Post() {
@@ -53,6 +53,14 @@ public class Post {
 	public void setSeq(Integer seq) {
 		this.seq = seq;
 	}
+	public Member getWriter() {
+		return writer;
+	}
+	public void setWriter(Member writer) {
+		this.writer = writer;
+	}
+	
+	
 	
 	
 }

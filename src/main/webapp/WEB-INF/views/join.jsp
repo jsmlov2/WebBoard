@@ -10,6 +10,7 @@
 var err = {
    DUP_ID : '중복된 아이디입니다'
 }
+var ctxpath = '${pageContext.request.contextPath}';
 $(document).ready( function(){
 	$('#btnJoin').click( function() {	console.log('FIRST');
 	var id = $('#id').val();
@@ -30,11 +31,14 @@ $(document).ready( function(){
 			} */   // r.success 는 true 갑이고, r.cause는 DUP_ID 임
  			 if(results.success){
 				 console.log(results.success);
-				 for( var key in results ) {
+				 document.location.href=ctxpath + '/login';
+				/*  for( var key in results ) {
 					 // results['cause']
 					 // results['success']
 					 $('#resultCode').append( results[key]);
-				 }
+				}
+				 */ 
+				 
 				 /*
 				for(var i=0; i<results.length;i++){
 					$('#resultCode').append(results[i]);

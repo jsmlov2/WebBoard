@@ -42,7 +42,7 @@ $(document).ready( function() {
 </script>
 </head>
 <body>
-가입되었습니다.
+
 
 <%-- <form action="${pageContext.request.contextPath}/doLogin" method="post">
 </form> --%>

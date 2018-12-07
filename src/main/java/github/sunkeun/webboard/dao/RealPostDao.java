@@ -92,10 +92,11 @@ public class RealPostDao implements IPostDao{
 	}
 	
 	@Override
-	public void insertPost(String tt, String cc, List<String> tags) {
+	public void insertPost(String tt, String cc, List<String> tags /*, Member writer*/) {
 		// TODO Auto-generated method stub
 		Post p = new Post(null, tt, cc); // seq == null 
-		int inserted = session.insert("PostMapper.insertPost", p);
+		// p.setWriter(writer);
+		int inserted = session.insert("PostMapper.insertPost", p); // #{writer.id}
 		if ( inserted != 1 ) {
 			// error!
 		}

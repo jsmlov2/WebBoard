@@ -125,6 +125,7 @@ public class HomeController {
 	//http://localhost:8080/webboard/write
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String pageWrite ( HttpServletRequest req) {
+		
 		return "write";
 	}
 
@@ -161,10 +162,13 @@ public class HomeController {
 			@RequestParam String tags) {
 		// req.setCharacterEncoding("UTF-8");
 		// postSerivce.insertPost( dkdkdkdkdkdk, dkdkdkdk )
+		// 1. 세선에 "Member" 이름표 달린 객체가 있어야함
+		//  Memeber m = session.getAttribute("Member");
 		System.out.println("title:" + tt);
 		System.out.println("content: " + cc);
 		System.out.println("tag: " + tags);
-		
+	
+		//postService.insertPost( tt, cc, tags, m );
 		postService.insertPost( tt, cc, tags );
 		
 		return "redirect:/list"; //

@@ -9,7 +9,8 @@
 		<collection property="tags" ofType="string">
 			<result column="tag" javaType="string"/>
 		</collection>
-		<!-- <association property="writer" javaType="Member"></association> -->
+		<!-- <association property="writer" javaType="Member">
+		</association> -->
 	</resultMap>
 	<!--
 	    Post p = new Post();
