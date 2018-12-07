@@ -2,6 +2,9 @@ package github.sunkeun.webboard.dao;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.junit.Ignore;
@@ -40,10 +43,12 @@ public class TagDaoTest {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void test_insert_post() {
+		List<String> tags = Arrays.asList("xyz", "자바", "java");
 		
-		postDao.insertPost("new post", "content of new post", "xyz");
+		postDao.insertPost("태그 3개 닫았음", "3개 달았음", tags);
+		
 	}
 
 	

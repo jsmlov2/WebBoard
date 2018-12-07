@@ -18,7 +18,7 @@ public class Post {
 	String title;
 	String content;
 	List<String> tags;
-	// User writer;
+	// Member writer;
 	
 	
 	public Post() {

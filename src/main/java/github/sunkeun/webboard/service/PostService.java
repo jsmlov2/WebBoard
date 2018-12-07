@@ -1,5 +1,6 @@
 package github.sunkeun.webboard.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -41,8 +42,11 @@ public class PostService {
 
 	public void insertPost(String tt, String cc, String tag) {
 		// TODO Auto-generated method stub
+		// java,c#,css
+		String[] tags = tag.split(",");
+		List<String> tagList = Arrays.asList(tags); // String 배열을 List<String> 으로 변환
 		
-		postDao.insertPost(tt,cc,tag);
+		postDao.insertPost(tt,cc,tagList);
 		// mmsDao.insert()
 		
 	}

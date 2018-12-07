@@ -56,7 +56,7 @@ public class FakePostDao implements IPostDao {
 	 * @see github.sunkeun.webboard.dao.IPostDao#insertPost(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void insertPost(String tt, String cc, String tag) {
+	public void insertPost(String tt, String cc, List<String> tag) {
 		// TODO Auto-generated method stub
 		Integer seq = fakes.get(fakes.size()-1).getSeq() + 1;
 		fakes.add(new Post(seq, tt, cc));

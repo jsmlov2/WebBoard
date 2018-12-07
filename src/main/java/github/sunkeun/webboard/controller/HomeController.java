@@ -158,14 +158,14 @@ public class HomeController {
 	//http://localhost:8080/webboard/doWrite
 	@RequestMapping(value = "/doWrite", method = RequestMethod.POST)
 	public String pagedoWrite (@RequestParam String tt, @RequestParam String cc, HttpServletRequest req,
-			@RequestParam String tag) {
+			@RequestParam String tags) {
 		// req.setCharacterEncoding("UTF-8");
 		// postSerivce.insertPost( dkdkdkdkdkdk, dkdkdkdk )
 		System.out.println("title:" + tt);
 		System.out.println("content: " + cc);
-		System.out.println("tag: " + tag);
+		System.out.println("tag: " + tags);
 		
-		postService.insertPost( tt, cc,tag );
+		postService.insertPost( tt, cc, tags );
 		
 		return "redirect:/list"; //
 	}

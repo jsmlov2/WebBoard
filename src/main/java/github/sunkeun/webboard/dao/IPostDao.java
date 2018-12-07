@@ -11,7 +11,7 @@ public interface IPostDao {
 
 	Post findPostBySeq(Integer seq);
 
-	void insertPost(String tt, String cc, String tag);
+	void insertPost(String tt, String cc, List<String> tag);
 
 	void deletetPost(int seq);
 

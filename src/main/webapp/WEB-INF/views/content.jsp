@@ -7,6 +7,17 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<style type="text/css">
+#tagview {
+	margin : 8px 0;
+}
+.tag {
+	border: 1px solid #abc;
+	background-color: #efefef;
+	padding : 2px 4px;
+	border-radius: 4px;
+}
+</style>
 <script type="text/javascript">
 function goTo ( ) {
 	console.log ( 'hi');
@@ -29,9 +40,11 @@ function goTo ( ) {
 <c:if test="${ not empty post }">
 <h3> ${post.seq} :  ${post.title}</h3>
 내용 : <p>${post.content}</p>
+<div id="tagview">
 <c:forEach items="${post.tags}" var="t">
-	<p>${t}</p>
+	<span class="tag">${t}</span>
 </c:forEach>
+</div>
 <!--<input type="button" onClick="${pageContext.request.contextPath}/delete" value="글삭제" > -->
 <%--
 query string 방식  

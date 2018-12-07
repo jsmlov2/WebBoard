@@ -92,7 +92,7 @@ public class RealPostDao implements IPostDao{
 	}
 	
 	@Override
-	public void insertPost(String tt, String cc, String tag) {
+	public void insertPost(String tt, String cc, List<String> tags) {
 		// TODO Auto-generated method stub
 		Post p = new Post(null, tt, cc); // seq == null 
 		int inserted = session.insert("PostMapper.insertPost", p);
@@ -101,13 +101,15 @@ public class RealPostDao implements IPostDao{
 		}
 		System.out.println("[GEN POST SEQ] " + p.getSeq());
 		
-		Long tagSeq = findTagSeq(tag);
+		for(String tag : tags ) {
+			Long tagSeq = findTagSeq(tag);			
+			Map<String, Object> param = new HashMap<>();
+			param.put("post", p);
+			param.put("tag", tagSeq);
+			session.insert("TagMapper.insertMapping", param );
+		}
 		
-		Map<String, Object> param = new HashMap<>();
-		param.put("post", p);
-		param.put("tag", tagSeq);
 		
-		session.insert("TagMapper.insertMapping", param );
 	}
 
 
