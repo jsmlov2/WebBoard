@@ -27,10 +27,11 @@ function goTo ( ) {
 </c:if>
 
 <c:if test="${ not empty post }">
-<h3> ${post.title}</h3>
-<p>${post.content}</p>
-<p>${post.seq}</p>
-
+<h3> ${post.seq} :  ${post.title}</h3>
+내용 : <p>${post.content}</p>
+<c:forEach items="${post.tags}" var="t">
+	<p>${t}</p>
+</c:forEach>
 <!--<input type="button" onClick="${pageContext.request.contextPath}/delete" value="글삭제" > -->
 <%--
 query string 방식  

@@ -6,6 +6,9 @@
 		<result property="seq" column="seq"/>
 		<result property="title" column="title"/>
 		<result property="content" column="content"/>
+		<collection property="tags" ofType="string">
+			<result column="tag" javaType="string"/>
+		</collection>
 	</resultMap>
 	<!--
 	    Post p = new Post();
@@ -22,7 +25,11 @@
 	</select>
 	
 	<select id="findPostBySeq" parameterType="int" resultMap="postMap">
-		select * from posts where seq = #{id}
+	select p.seq, p.title, p.content, t.tag
+		from posts p
+		left join post_tag pt on p.seq = pt.post
+		left join tags t on t.no = pt.tag
+		where p.seq = #{id};
 	</select>
 	
 	<!--

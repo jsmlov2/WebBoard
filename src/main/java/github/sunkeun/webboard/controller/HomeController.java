@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import github.sunkeun.webboard.dto.Post;
 import github.sunkeun.webboard.service.PostService;
 
@@ -32,7 +35,9 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	@Inject
+	ObjectMapper om= new ObjectMapper();
+	
+	@Inject // 이미 생성되어있는 객체를 연결시켜줌 
 	PostService postService; //@Service찾아서 자동으로 객체생성
 	
 	/**
@@ -71,9 +76,10 @@ public class HomeController {
 	
 	@RequestMapping(value = "/listAsync", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String pageListAsync ( ) {
+	public String pageListAsync ( ) throws JsonProcessingException {
 		List<Post> all = postService.findAll();
 		// req.setAttribute("posts", all);
+		/*
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		for( Post p : all) {
@@ -87,6 +93,12 @@ public class HomeController {
 		System.out.println(sb.toString());
 		
 		return sb.toString();
+		*/
+		// ObjectMapp
+		
+		String json = om.writeValueAsString(all);
+		System.out.println(json);
+		return json;
 	}
 	// /content/22222
 	// http://localhost:8080/webboard/content/yes
@@ -145,13 +157,15 @@ public class HomeController {
 	 */
 	//http://localhost:8080/webboard/doWrite
 	@RequestMapping(value = "/doWrite", method = RequestMethod.POST)
-	public String pagedoWrite (@RequestParam String tt, @RequestParam String cc, HttpServletRequest req ) {
+	public String pagedoWrite (@RequestParam String tt, @RequestParam String cc, HttpServletRequest req,
+			@RequestParam String tag) {
 		// req.setCharacterEncoding("UTF-8");
 		// postSerivce.insertPost( dkdkdkdkdkdk, dkdkdkdk )
 		System.out.println("title:" + tt);
-		System.out.println("cc: " + cc);
+		System.out.println("content: " + cc);
+		System.out.println("tag: " + tag);
 		
-		postService.insertPost( cc, tt );
+		postService.insertPost( tt, cc,tag );
 		
 		return "redirect:/list"; //
 	}

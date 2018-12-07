@@ -24,11 +24,11 @@ $(document).ready( function(){
 		success : function(res){
 			$('#resultCode').append('aaa');
 			var results = JSON.parse(res);
-			var r  = {
+		/* 	var r  = {
 					success : true,
 					cause : 'DUP_ID'
-			}
-			 if(results.success){
+			} */   // r.success 는 true 갑이고, r.cause는 DUP_ID 임
+ 			 if(results.success){
 				 console.log(results.success);
 				 for( var key in results ) {
 					 // results['cause']

@@ -4,14 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
-import org.springframework.stereotype.Repository;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 
-
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
 import github.sunkeun.webboard.dto.Member;
 
@@ -21,11 +21,24 @@ public class LoginDao {
 
 	
   @Inject DataSource ds;
+  @Inject SqlSession session; // SqlSession session = new SqlSession();
   
 	public void insertMember(Member m) {
 		// TODO Auto-generated method stub
 		System.out.println(m.getId());
-		try {
+		
+		session.insert("UserMapper.insertMember", m);
+		
+	/*	Map<String,Object> param = new HashMap<>();
+		param.put("id", m.getId());
+		param.put("pw",  m.getPw());
+		param.put("name", m.getName());
+		param.put("address", m.getAddress());
+		param.put("eMail", m.geteMail());
+		param.put("rDate", m.getrDate());
+		
+		session.insert("UserMapper.insertMember", param);*/
+	/*	try {
 			Connection con = ds.getConnection();
 			PreparedStatement stmt = con.prepareStatement("insert into members (id, pw, name, eMail, address) "
 					+ "values(?, ?, ?, ?, ?)");
@@ -45,13 +58,20 @@ public class LoginDao {
 			// TODO Auto-generated catch block
 			throw new RuntimeException(e);
 		}
-	
+	*/
 	}
 
-	public Member login(String id, String pwd) {
+	public Member login(String id, String pw) {
 		// TODO Auto-generated method stub
 		
-		Member m = null;
+		Map<String, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("pw", pw);
+		
+		Member m = (Member)session.selectOne("UserMapper.login", param);
+		return m;
+		
+		/*
 		
 		try {
 			Connection con = ds.getConnection();
@@ -85,7 +105,7 @@ public class LoginDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			throw new RuntimeException(e);
-		}
+		}*/
 		
 	}
 
