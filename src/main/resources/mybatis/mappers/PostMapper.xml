@@ -48,5 +48,15 @@
         where seq = #{id}
 	</delete>
 	
+	<insert id="insertPost" parameterType="hashmap" useGeneratedKeys="true" keyColumn="seq" keyProperty="seq">
+	  insert into posts (title, content) 
+			 values (#{title}, #{content})  
+	</insert>
+	
+	<insert id="insertTag" parameterType="string">
+	   insert into tags(tag)
+	   values(#{tag})
+	
+	</insert>
 	
 </mapper>

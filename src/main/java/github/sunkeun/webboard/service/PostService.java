@@ -39,10 +39,10 @@ public class PostService {
 		return postDao.findPostBySeq( seq );
 	}
 
-	public void insertPost(String cc, String tt) {
+	public void insertPost(String tt, String cc, String tag) {
 		// TODO Auto-generated method stub
 		
-		postDao.insertPost(cc,tt);
+		postDao.insertPost(tt,cc,tag);
 		// mmsDao.insert()
 		
 	}

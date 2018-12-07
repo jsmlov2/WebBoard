@@ -1,4 +1,7 @@
 package github.sunkeun.webboard.dto;
+
+import java.util.List;
+
 /**
  * 
  * careate table (
@@ -14,13 +17,18 @@ public class Post {
 	Integer seq; // PK
 	String title;
 	String content;
+	List<String> tags;
 	// User writer;
-	
-	
 	
 	
 	public Post() {
 		super();
+	}
+	public List<String> getTags() {
+		return tags;
+	}
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 	public Post(Integer seq, String t, String c) {
 		this.seq= seq;

@@ -1,10 +1,5 @@
 package github.sunkeun.webboard.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,10 +8,10 @@ import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Repository;
 
 import github.sunkeun.webboard.dto.Post;
+import github.sunkeun.webboard.dto.Tag;
 
 @Repository
 public class RealPostDao implements IPostDao{
@@ -83,26 +78,36 @@ public class RealPostDao implements IPostDao{
 		
 	}
 
-	@Override
-	public void insertPost(String tt, String cc) {
-		// TODO Auto-generated method stub
-		try {
-			Connection con = ds.getConnection();
-			PreparedStatement stmt = con.prepareStatement("insert into posts (title, content)" + 
-					"values (?, ? )");
-			stmt.setString(1, tt);
-			stmt.setString(2, cc);
-			int rs = stmt.executeUpdate();
-			/*
-			if(rs!=1){
-				throw new RuntimeException("insert fail!!!");
-			}
-			*/
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
+	Long findTagSeq ( String tagName ) { // Tag
+		// insert IGNORE into tab_name
+		Long tagSeq = session.selectOne("TagMapper.findTagByName", tagName);
+		
+		if ( tagSeq == null) {
+			Tag newTag = new Tag(tagName);
+			session.insert("TagMapper.insertTag", newTag);
+			tagSeq = newTag.getSeq();
 		}
 		
+		return tagSeq;
+	}
+	
+	@Override
+	public void insertPost(String tt, String cc, String tag) {
+		// TODO Auto-generated method stub
+		Post p = new Post(null, tt, cc); // seq == null 
+		int inserted = session.insert("PostMapper.insertPost", p);
+		if ( inserted != 1 ) {
+			// error!
+		}
+		System.out.println("[GEN POST SEQ] " + p.getSeq());
 		
+		Long tagSeq = findTagSeq(tag);
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("post", p);
+		param.put("tag", tagSeq);
+		
+		session.insert("TagMapper.insertMapping", param );
 	}
 
 
