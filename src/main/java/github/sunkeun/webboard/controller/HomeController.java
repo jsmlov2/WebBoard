@@ -1,12 +1,11 @@
 package github.sunkeun.webboard.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import github.sunkeun.webboard.dto.Member;
 import github.sunkeun.webboard.dto.Post;
 import github.sunkeun.webboard.service.PostService;
 
@@ -74,9 +74,11 @@ public class HomeController {
 		return "list";
 	}
 	
-	@RequestMapping(value = "/listAsync", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@RequestMapping(value = "/listAsync", 
+			method = RequestMethod.GET, 
+			produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public String pageListAsync ( ) throws JsonProcessingException {
+	public Object pageListAsync ( ) throws JsonProcessingException {
 		List<Post> all = postService.findAll();
 		// req.setAttribute("posts", all);
 		/*
@@ -96,9 +98,10 @@ public class HomeController {
 		*/
 		// ObjectMapp
 		
-		String json = om.writeValueAsString(all);
-		System.out.println(json);
-		return json;
+		//String json = om.writeValueAsString(all);
+		//System.out.println(json);
+		//return json;
+		return all;
 	}
 	// /content/22222
 	// http://localhost:8080/webboard/content/yes
@@ -125,7 +128,12 @@ public class HomeController {
 	//http://localhost:8080/webboard/write
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String pageWrite ( HttpServletRequest req) {
-		
+		// 로그인이 되었다는 전제하에 실행되게 하곻 싶음!
+//		아래 코드는 LoginChecker.java 로 다 옮겼음
+//		HttpSession session = req.getSession();
+//		if ( session.getAttribute("Member") == null ) {
+//			return "redirect:/login";
+//		}
 		return "write";
 	}
 
@@ -159,17 +167,19 @@ public class HomeController {
 	//http://localhost:8080/webboard/doWrite
 	@RequestMapping(value = "/doWrite", method = RequestMethod.POST)
 	public String pagedoWrite (@RequestParam String tt, @RequestParam String cc, HttpServletRequest req,
-			@RequestParam String tags) {
+			@RequestParam String tags, HttpSession session) {
 		// req.setCharacterEncoding("UTF-8");
 		// postSerivce.insertPost( dkdkdkdkdkdk, dkdkdkdk )
 		// 1. 세선에 "Member" 이름표 달린 객체가 있어야함
 		//  Memeber m = session.getAttribute("Member");
+		Member writer = (Member)session.getAttribute("Member");
+		System.out.println("아이디는 : " + writer.getId());
 		System.out.println("title:" + tt);
 		System.out.println("content: " + cc);
 		System.out.println("tag: " + tags);
-	
+		
 		//postService.insertPost( tt, cc, tags, m );
-		postService.insertPost( tt, cc, tags );
+		postService.insertPost( tt, cc, tags, writer );
 		
 		return "redirect:/list"; //
 	}

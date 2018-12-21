@@ -24,6 +24,16 @@ public class Post {
 	public Post() {
 		super();
 	}
+	
+	public Post(Integer seq, String title, String content, List<String> tags, Member writer) {
+		super();
+		this.seq = seq;
+		this.title = title;
+		this.content = content;
+		this.tags = tags;
+		this.writer = writer;
+	}
+
 	public List<String> getTags() {
 		return tags;
 	}

@@ -28,13 +28,13 @@ $(document).ready( function() {
 			url : '${pageContext.request.contextPath}/doLoginAsyn',
 			data : 'id=' + id + '&pw=' + pw,
 			success : function(res) {
-				var obj = JSON.parse(res);
-				if ( obj.success ) {
+				//var obj = JSON.parse(res);
+				if ( res.success ) {
 					location.href='${pageContext.request.contextPath}/list';
 				} else {
 					alert('아이디 패스워드 확인!');
 				}
-				console.log(res, obj );
+				console.log(res);
 			}
 		});
 	});

@@ -14,9 +14,9 @@ $(document).ready( function() {
 		url : '${pageContext.request.contextPath}/listAsync',
 		success : function( res ) {
 			// [{"title": "first" }, {}, ..{} ]
-			var posts = JSON.parse( res );
-			for ( var i = 0 ; i < posts.length ; i ++ ) {
-				$('#posts').append('<li>' + posts[i].title + '</li>');
+			//var posts = JSON.parse( res );
+			for ( var i = 0 ; i < res.length ; i ++ ) {
+				$('#posts').append('<li>' + res[i].title + '</li>');
 			}
 		}
 	});

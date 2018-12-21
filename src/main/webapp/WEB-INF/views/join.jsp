@@ -24,13 +24,13 @@ $(document).ready( function(){
 		data : 'id=' + id + '&pw=' + pw + '&name=' + name  + '&eMail=' + eMail + '&address=' + address,
 		success : function(res){
 			$('#resultCode').append('aaa');
-			var results = JSON.parse(res);
+			// var results = res; // JSON.parse(res);
 		/* 	var r  = {
 					success : true,
 					cause : 'DUP_ID'
 			} */   // r.success 는 true 갑이고, r.cause는 DUP_ID 임
- 			 if(results.success){
-				 console.log(results.success);
+ 			 if(res.success){
+				 console.log(res.success);
 				 document.location.href=ctxpath + '/login';
 				/*  for( var key in results ) {
 					 // results['cause']

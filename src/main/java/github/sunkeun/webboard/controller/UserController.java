@@ -1,6 +1,8 @@
 package github.sunkeun.webboard.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import github.sunkeun.webboard.dto.Member;
 import github.sunkeun.webboard.service.UserService;
@@ -113,18 +118,26 @@ public class UserController {
 	
 	@RequestMapping(value="/doLoginAsyn", method=RequestMethod.POST)
 	@ResponseBody
-	public String doLoginAsync(@RequestParam String id, @RequestParam String pw, HttpSession session) {
+	public Object doLoginAsync(@RequestParam String id, @RequestParam String pw, HttpSession session) throws JsonProcessingException {
 		
 		Member m = userService.login(id,pw);
-		
+		// ObjectMapper om = new ObjectMapper();
 		System.out.println("login user: " + m);
+
+		Map<String, Object> res = new HashMap<>();
 		if(m!=null) {
 			
 			session.setAttribute("Member", m);
-			return "{\"success\": true, \"id\": \"dddddd\" }"; //?? dddd 이게 뭐지:::
+			res.put("success", true);
+			res.put("id", "dddddd");
+			//return "{\"success\": true, \"id\": \"dddddd\" }"; //?? dddd 이게 뭐지:::
 		}else {
-			return  "{\"success\": false, \"id\": null }";
+			res.put("success", false);
+			res.put("cause", "FAIL");
+			// return  "{\"success\": false, \"id\": null }";
 		}
+		// return om.writeValueAsString(res);
+		return res;
 		
 	}
 	

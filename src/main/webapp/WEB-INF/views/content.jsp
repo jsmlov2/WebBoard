@@ -38,11 +38,14 @@ function goTo ( ) {
 </c:if>
 
 <c:if test="${ not empty post }">
-<h3> ${post.seq} :  ${post.title}</h3>
-내용 : <p>${post.content}</p>
+글번호 : ${post.seq}  </p>
+제목 :  ${post.title}</p>
+내용 : ${post.content}</p>
+작성자 : ${post.writer.id}(${post.writer.name})
+
 <div id="tagview">
 <c:forEach items="${post.tags}" var="t">
-	<span class="tag">${t}</span>
+	태그 : <span class="tag">${t}</span>
 </c:forEach>
 </div>
 <!--<input type="button" onClick="${pageContext.request.contextPath}/delete" value="글삭제" > -->

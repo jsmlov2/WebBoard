@@ -33,7 +33,15 @@
 	 -->	
 	<context:component-scan base-package="github.sunkeun.webboard" />
 	
-	
+	<beans:bean id="loginChecker" class="github.sunkeun.webboard.controller.listeners.LoginChecker"></beans:bean>
+	<interceptors>
+		<interceptor>
+			<mapping path="/write"/>
+			<mapping path="/doWrite"/>
+			<!-- <mapping path="/update"/> -->
+			<beans:ref bean="loginChecker"/>
+		</interceptor>
+	</interceptors>
 	
 	
 </beans:beans>

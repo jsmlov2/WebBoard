@@ -6,11 +6,13 @@
 		<result property="seq" column="seq"/>
 		<result property="title" column="title"/>
 		<result property="content" column="content"/>
+		<association property="writer" javaType="github.sunkeun.webboard.dto.Member">
+			<result property="id" column="id"/>
+			<result property="name" column="name"/>
+		</association> 
 		<collection property="tags" ofType="string">
 			<result column="tag" javaType="string"/>
 		</collection>
-		<!-- <association property="writer" javaType="Member">
-		</association> -->
 	</resultMap>
 	<!--
 	    Post p = new Post();
@@ -27,10 +29,11 @@
 	</select>
 	
 	<select id="findPostBySeq" parameterType="int" resultMap="postMap">
-	select p.seq, p.title, p.content, t.tag
+	select p.seq, p.title, p.content, t.tag, m.id, m.name
 		from posts p
 		left join post_tag pt on p.seq = pt.post
 		left join tags t on t.no = pt.tag
+		join members m on m.id=p.writer
 		where p.seq = #{id};
 	</select>
 	
@@ -58,8 +61,8 @@
 	</delete>
 	
 	<insert id="insertPost" parameterType="hashmap" useGeneratedKeys="true" keyColumn="seq" keyProperty="seq">
-	  insert into posts (title, content) 
-			 values (#{title}, #{content})  
+	  insert into posts (title, content, writer) 
+			 values (#{title}, #{content}, #{writer.id})  
 	</insert>
 	
 	<insert id="insertTag" parameterType="string">

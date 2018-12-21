@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import github.sunkeun.webboard.dto.Member;
 import github.sunkeun.webboard.dto.Post;
 import github.sunkeun.webboard.dto.Tag;
 
@@ -92,9 +93,9 @@ public class RealPostDao implements IPostDao{
 	}
 	
 	@Override
-	public void insertPost(String tt, String cc, List<String> tags /*, Member writer*/) {
+	public void insertPost(String tt, String cc, List<String> tags , Member writer) {
 		// TODO Auto-generated method stub
-		Post p = new Post(null, tt, cc); // seq == null 
+		Post p = new Post(null, tt, cc, tags, writer); // seq == null 
 		// p.setWriter(writer);
 		int inserted = session.insert("PostMapper.insertPost", p); // #{writer.id}
 		if ( inserted != 1 ) {
@@ -105,13 +106,13 @@ public class RealPostDao implements IPostDao{
 		for(String tag : tags ) {
 			Long tagSeq = findTagSeq(tag);			
 			Map<String, Object> param = new HashMap<>();
-			param.put("post", p);
+			param.put("post", p); 
 			param.put("tag", tagSeq);
 			session.insert("TagMapper.insertMapping", param );
-		}
-		
-		
+			}
 	}
+		
+		
 
 
 	@Override

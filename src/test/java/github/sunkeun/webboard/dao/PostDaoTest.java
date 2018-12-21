@@ -20,39 +20,15 @@ import github.sunkeun.webboard.dto.Post;
 @ContextConfiguration(locations= {
 		"file:src/main/webapp/WEB-INF/spring/root-context.xml"
 })
-public class TagDaoTest {
+public class PostDaoTest {
 
 	@Inject RealPostDao postDao;
 	
 	@Test
-	public void test_태그명으로_조회() {
-		Long seq = postDao.findTagSeq("asdf");
-		assertNotNull(seq);
-		seq = postDao.findTagSeq("nothing");
-		assertNotNull(seq);
-		
-	}
-	
-	@Test
-	public void test_글조회_태그도같이() {
+	public void test_글조회() {
 		Post p = postDao.findPostBySeq(21);
-		assertNotNull(p);
-		assertNotNull(p.getTags());
-		assertEquals(2, p.getTags().size());
-		System.out.println(p.getTags());
-	}
-	
-	@Test
-	//@Ignore
-	public void test_insert_post() {
-		List<String> tags = Arrays.asList("xyz", "자바", "java");
-		
-		// postDao.insertPost("태그 3개 닫았음", "3개 달았음", tags);
-		
-	}
-
-	
-	int add( int a, int b, int c) {
-		return a + b * c;
+		assertNotNull(p.getWriter());
+		assertNotNull(p.getWriter().getId());
+		assertNotNull(p.getWriter().getName());
 	}
 }

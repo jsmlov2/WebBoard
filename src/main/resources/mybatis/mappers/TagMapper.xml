@@ -25,12 +25,9 @@
 	</insert>
 	
 	<insert id="insertMapping" parameterType="hashmap">
-	
 	insert into post_tag
 	(post, tag)
-	values(#{post.seq}, #{tag})
-		
-	
+	values(#{post.seq}, #{tag})	
 	</insert>
 	
 	
