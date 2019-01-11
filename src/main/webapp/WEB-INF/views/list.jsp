@@ -6,8 +6,31 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+#issue {
+    border: 1px solid #ccc;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+</style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+function getIssue(portal) {
+	$.ajax({
+		method: 'GET',
+		url: '${pageContext.request.contextPath}/issues' + portal,
+		success: function(res) {
+			// [ 'dd', 'xxx'']
+			var issue = $('#issue');
+			issue.empty();
+			for(var i = 0 ; i < res.length ; i++) {
+				
+				issue.append(`<div class="kw">${ '${res[i]}' }</div>`);
+			}
+			console.log(res);
+		}
+	});
+}
 $(document).ready( function() {
 	$.ajax({
 		method : 'GET',
@@ -15,11 +38,18 @@ $(document).ready( function() {
 		success : function( res ) {
 			// [{"title": "first" }, {}, ..{} ]
 			//var posts = JSON.parse( res );
+			var posts = $('#posts');
 			for ( var i = 0 ; i < res.length ; i ++ ) {
-				$('#posts').append('<li>' + res[i].title + '</li>');
+				posts.append('<li>' + res[i].title + '</li>');
 			}
 		}
 	});
+	getIssue('daum');
+	// getIssue('naver');
+	var call = setInterval(function() {
+		getIssue();
+		// call();
+	}, 2*1000);
 });
 </script>
 </head>
@@ -33,6 +63,14 @@ $(document).ready( function() {
 <c:if test="${empty Member }">
 	<div><a href="${pageContext.request.contextPath}/login">로그인</a></div>
 </c:if>
+<div id="issue">
+<!-- 
+	<div class="kw">감자</div>
+	<div class="kw">감자</div>
+	<div class="kw">감자</div>
+	<div class="kw">감자</div>
+ -->
+</div>
 <ul>
  <c:forEach var="each" items="${ posts }">
 	<li> <a href="${pageContext.request.contextPath}/content/${each.seq}">${ each.title}</a> 
