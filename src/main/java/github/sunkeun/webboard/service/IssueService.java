@@ -8,6 +8,8 @@ import java.util.List;
  */
 public interface IssueService {
 
-	List<String> getIssues(String keyword);
+	// List<String> getIssues();
+	
+	List<String> getKeywords();
 
 }

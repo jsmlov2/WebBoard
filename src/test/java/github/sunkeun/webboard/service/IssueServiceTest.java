@@ -11,7 +11,7 @@ public class IssueServiceTest {
 	@Test
 	public void test() {
 		NaverIssueService nis = new NaverIssueService();
-		List<String> kwd = nis.getIssues("");
+		List<String> kwd = nis.crawling();
 		assertTrue(kwd.size() > 0 );
 		System.out.println(kwd);
 		

@@ -31,7 +31,7 @@
 	@ 붙어 있는거 객체로 만듦 
 	예를 들어 controller ,service, repository  
 	 -->	
-	<context:component-scan base-package="github.sunkeun.webboard" />
+	<context:component-scan base-package="github.sunkeun.webboard.controller" />
 	
 	<beans:bean id="loginChecker" class="github.sunkeun.webboard.controller.listeners.LoginChecker"></beans:bean>
 	<interceptors>

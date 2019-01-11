@@ -62,7 +62,7 @@ $(document).ready( function() {
 		getIssue('daum');
 		getIssue('naver');
 		// call();
-	}, 10*1000);
+	}, 1*1000);
 	
 	
 });
