@@ -20,23 +20,22 @@ public class NaverIssueService implements IssueService{
 		String url = "https://m.search.naver.com/search.naver?query=test&where=m&sm=mtp_hty";
 		
 		Connection con = Jsoup.connect(url);
-		con.header("referer", "https://m.naver.com/");
+		con.header("referrer", "https://m.naver.com/");
 		
 		Document doc;
 		try {
 			doc = con.get();
-			System.out.println(doc.toString());
-			List<String> keywords = new ArrayList<>();
-			/*
-			Elements e = doc.select(".wrap_issue");
-			Element issue = e.get(0);
-			Elements anchors = issue.select("ol.list_issue > li > a > .txt_issue");
+			// System.out.println(doc.toString());
+			
+			Elements kwd = doc.select(".hotkwd"); // .hotkwd > ol > li > a .tit
+			Element k0 = kwd.get(0);
+			Elements anchors = k0.select("ol > li > a .tit");
 			List<String> keywords = new ArrayList<>();
 			for (Element anchor : anchors) {
 				// System.out.println(anchor.text());
 				keywords.add(anchor.text());
 			}
-			*/
+			
 			return keywords;
 		} catch (IOException e) {
 			throw new RuntimeException(e);

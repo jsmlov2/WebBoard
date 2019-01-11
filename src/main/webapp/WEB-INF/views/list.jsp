@@ -12,20 +12,30 @@
     padding: 4px 8px;
     border-radius: 6px;
 }
+#issue .tab {
+	float: left;
+    width: 50%;
+}
+.posts {
+	clear:both;
+}
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 function getIssue(portal) {
 	$.ajax({
 		method: 'GET',
-		url: '${pageContext.request.contextPath}/issues' + portal,
+		url: '${pageContext.request.contextPath}/issues/' + portal,
 		success: function(res) {
 			// [ 'dd', 'xxx'']
-			var issue = $('#issue');
+			if(!res.success) {
+				alert(res.cause);
+				return;
+			}
+			var issue = $('#' + portal); // #naver
 			issue.empty();
-			for(var i = 0 ; i < res.length ; i++) {
-				
-				issue.append(`<div class="kw">${ '${res[i]}' }</div>`);
+			for(var i = 0 ; i < res.data.length ; i++) {
+				issue.append(`<div class="kw">${ '${res.data[i]}' }</div>`);
 			}
 			console.log(res);
 		}
@@ -45,11 +55,16 @@ $(document).ready( function() {
 		}
 	});
 	getIssue('daum');
+	getIssue('naver');
 	// getIssue('naver');
+	
 	var call = setInterval(function() {
-		getIssue();
+		getIssue('daum');
+		getIssue('naver');
 		// call();
-	}, 2*1000);
+	}, 10*1000);
+	
+	
 });
 </script>
 </head>
@@ -64,6 +79,10 @@ $(document).ready( function() {
 	<div><a href="${pageContext.request.contextPath}/login">로그인</a></div>
 </c:if>
 <div id="issue">
+	<div id="daum" class="tab">
+	</div>
+	<div id="naver" class="tab">
+	</div>
 <!-- 
 	<div class="kw">감자</div>
 	<div class="kw">감자</div>
@@ -71,7 +90,7 @@ $(document).ready( function() {
 	<div class="kw">감자</div>
  -->
 </div>
-<ul>
+<ul class="posts">
  <c:forEach var="each" items="${ posts }">
 	<li> <a href="${pageContext.request.contextPath}/content/${each.seq}">${ each.title}</a> 
  </c:forEach>

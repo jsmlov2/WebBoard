@@ -1,6 +1,7 @@
 package github.sunkeun.webboard.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -23,7 +24,19 @@ public class IssueController {
 	@RequestMapping(value="/issues/{portal}", method=RequestMethod.GET, produces="application/json; charset=utf-8")
 	@ResponseBody
 	public Object issue(@PathVariable String portal) {
-		return daum.getIssues("");
+		HashMap<String, Object> res = new HashMap<>();
+		if(portal.equals("naver")) {
+			res.put("success", true);
+			res.put("data", naver.getIssues(""));
+		}else if(portal.equals("daum")){
+			res.put("success",true);
+			res.put("data", daum.getIssues(""));
+		}else {
+			res.put("success", false);
+			res.put("cause", "NO_SUCH_PORTAL");
+		}
+		return res;
+		
 //		return Arrays.asList("a", "B");
 	}
 }
